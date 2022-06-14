@@ -23,6 +23,7 @@ function Register() {
   )
 
   useEffect(() => {
+
     if (isError) {
       toast.error(message)
     }
@@ -43,6 +44,7 @@ function Register() {
   }
 
   const onSubmit = (e) => {
+    
     e.preventDefault()
 
     if (password !== password2) {
