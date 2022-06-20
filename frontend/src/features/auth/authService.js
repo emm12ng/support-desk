@@ -13,6 +13,9 @@ const register = async (userData) => {
 }
 
 // Login user
+// what is the difference between post and get?
+// what does 'await' do?
+// async - await pattern
 const login = async (userData) => {
   const response = await axios.post(API_URL + 'login', userData)
 
