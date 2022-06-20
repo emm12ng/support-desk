@@ -14,20 +14,22 @@ import NoteItem from '../components/NoteItem'
 import Modal from 'react-modal'
 import { FaPlus } from 'react-icons/fa'
 
-function Ticket() {
+const customStyles = {
+  content: {
+    width: '600px',
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+    position: 'relative',
+  },
+}
 
-  const customStyles = {
-    content: {
-      width: '600px',
-      top: '50%',
-      left: '50%',
-      right: 'auto',
-      bottom: 'auto',
-      marginRight: '-50%',
-      transform: 'translate(-50%, -50%)',
-      position: 'relative',
-    },
-  }
+Modal.setAppElement('#root')
+
+function Ticket() {
 
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const [noteText, setNoteText] = useState('')
