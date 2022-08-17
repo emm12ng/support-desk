@@ -1,7 +1,7 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
 import authService from './authService'
 
-// Get user from localstorage
+// get user from localstorage
 const user = JSON.parse(localStorage.getItem('user'))
 
 const initialState = {
@@ -12,7 +12,7 @@ const initialState = {
   message: '',
 }
 
-// Register new user
+// register new user
 export const register = createAsyncThunk(
   'auth/register',
   async (user, thunkAPI) => {
@@ -20,9 +20,7 @@ export const register = createAsyncThunk(
       return await authService.register(user)
     } catch (error) {
       const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
+        (error.response && error.response.data && error.response.data.message) ||
         error.message ||
         error.toString()
 
@@ -31,15 +29,13 @@ export const register = createAsyncThunk(
   }
 )
 
-// Login user
-export const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
+// login user
+export const login = createAsyncThunk('auth/login', async(user, thunkAPI) => {
   try {
     return await authService.login(user)
   } catch (error) {
     const message =
-      (error.response && 
-        error.response.data && 
-        error.response.data.message) ||
+      (error.response && error.response.data && error.response.data.message) ||
       error.message ||
       error.toString()
 
@@ -49,8 +45,8 @@ export const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
   }
 })
 
-// Logout user
-export const logout = createAsyncThunk('auth/logout', async () => {
+// logout user
+export const logout = createAsyncThunk('auth/logout', async() => {
   await authService.logout()
 })
 
@@ -63,7 +59,7 @@ export const authSlice = createSlice({
       state.isError = false
       state.isSuccess = false
       state.message = ''
-    },
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -102,5 +98,5 @@ export const authSlice = createSlice({
   },
 })
 
-export const { reset } = authSlice.actions
+export const {reset} = authSlice.actions
 export default authSlice.reducer

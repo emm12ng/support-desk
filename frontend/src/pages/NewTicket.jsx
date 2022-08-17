@@ -1,14 +1,14 @@
-import { useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import {useState, useEffect} from 'react'
+import {useNavigate} from 'react-router-dom'
+import {useSelector, useDispatch} from 'react-redux'
 import { toast } from 'react-toastify'
-import { createTicket, reset } from '../features/tickets/ticketSlice'
-import Spinner from '../components/Spinner'
+import {createTicket, reset} from '../features/tickets/ticketSlice'
 import BackButton from '../components/BackButton'
+import Spinner from '../components/Spinner'
 
 function NewTicket() {
-  const { user } = useSelector((state) => state.auth)
-  const { isLoading, isError, isSuccess, message } = useSelector(
+  const {user} = useSelector((state) => state.auth)
+  const {isLoading, isError, isSuccess, message} = useSelector(
     (state) => state.tickets
   )
 
@@ -36,21 +36,20 @@ function NewTicket() {
   const onSubmit = (e) => {
     e.preventDefault()
     console.log(product)
-    dispatch(createTicket({ product, description }))
+    dispatch(createTicket({product, description}))
   }
 
   if (isLoading) {
-    return <Spinner />
+    return <Spinner/>
   }
 
   return (
     <>
-      <BackButton url='/' />
+      <BackButton url='/'/>
       <section className='heading'>
         <h1>Create New Ticket</h1>
         <p>Please fill out the form below</p>
       </section>
-
       <section className='form'>
         <div className='form-group'>
           <label htmlFor='name'>Customer Name</label>
@@ -67,8 +66,7 @@ function NewTicket() {
               name='product'
               id='product'
               value={product}
-              onChange={(e) => setProduct(e.target.value)}
-            >
+              onChange={(e) => setProduct(e.target.value)}>
               <option value='iPhone'>iPhone</option>
               <option value='Macbook Pro'>Macbook Pro</option>
               <option value='iMac'>iMac</option>

@@ -1,11 +1,11 @@
-const asyncHandler = require('express-async-handler')
-const bcrypt = require('bcryptjs')
-const User = require('../models/userModel')
-const jwt = require('jsonwebtoken')
+const asyncHandler = require('express-async-handler');
+const bcrypt = require('bcryptjs');
+const User = require('../models/userModel');
+const jwt = require('jsonwebtoken');
 
-// @desc register a new user 
+// @desc register new user 
 // @route /api/users
-// @access Public
+// @access public
 const registerUser = asyncHandler(async(req, res) => {
     const {name, email, password} = req.body
 
@@ -14,7 +14,7 @@ const registerUser = asyncHandler(async(req, res) => {
         throw new Error('Please include all fields')
     }
 
-    // find if user already exists
+    // check if user already exists
     const userExists = await User.findOne({email})
     if (userExists) {
         res.status(400)
@@ -45,17 +45,16 @@ const registerUser = asyncHandler(async(req, res) => {
     }
 })
 
-// @desc login a user
+// @desc login user
 // @route /api/users/login
-// @access Public
+// @access public
 const loginUser = asyncHandler(async(req, res) => {
     const {email, password} = req.body
 
-    // go to mongodb to check for email
+    // check for email in mongodb
     const user = await User.findOne({email})
 
     if (user && (await bcrypt.compare(password, user.password))) {
-        // token = generateToken(user._id)
         res.status(200).json({
             _id: user._id,
             name: user.name,
@@ -70,7 +69,7 @@ const loginUser = asyncHandler(async(req, res) => {
 
 // @desc get current user
 // @route /api/users/me
-// @access Private
+// @access private
 const getMe = asyncHandler(async(req, res) => {
     const user = {
         id: req.user._id,

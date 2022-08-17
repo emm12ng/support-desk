@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
 import ticketService from './ticketService'
 
 const initialState = {
@@ -10,18 +10,36 @@ const initialState = {
   message: '',
 }
 
-// Create new ticket
+// get user tickets
+export const getTickets = createAsyncThunk(
+  'tickets/getAll',
+  async (_, thunkAPI) => {
+      try {
+          const token = thunkAPI.getState().auth.user.token
+
+          return await ticketService.getTickets(token)
+      } catch (error) {
+          const message =
+          (error.response && error.response.data && error.response.data.message) ||
+          error.message ||
+          error.toString()
+  
+          return thunkAPI.rejectWithValue(message)
+      }
+  }
+)
+
+// create new ticket
 export const createTicket = createAsyncThunk(
     'tickets/create',
     async (ticketData, thunkAPI) => {
         try {
         const token = thunkAPI.getState().auth.user.token
+
         return await ticketService.createTicket(ticketData, token)
         } catch (error) {
         const message =
-            (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
+            (error.response && error.response.data && error.response.data.message) ||
             error.message ||
             error.toString()
 
@@ -30,38 +48,17 @@ export const createTicket = createAsyncThunk(
   }
 )
 
-// Get user tickets
-export const getTickets = createAsyncThunk(
-    'tickets/getAll',
-    async (_, thunkAPI) => {
-        try {
-            const token = thunkAPI.getState().auth.user.token
-            return await ticketService.getTickets(token)
-        } catch (error) {
-            const message =
-            (error.response &&
-                error.response.data &&
-                error.response.data.message) ||
-            error.message ||
-            error.toString()
-    
-            return thunkAPI.rejectWithValue(message)
-        }
-    }
-)
-
-// Close ticket
-export const closeTicket = createAsyncThunk(
-  'tickets/close',
+// get user ticket
+export const getTicket = createAsyncThunk(
+  'tickets/get',
   async (ticketId, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token
-      return await ticketService.closeTicket(ticketId, token)
+
+      return await ticketService.getTicket(ticketId, token)
     } catch (error) {
       const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
+        (error.response && error.response.data && error.response.data.message) ||
         error.message ||
         error.toString()
 
@@ -70,18 +67,17 @@ export const closeTicket = createAsyncThunk(
   }
 )
 
-// Get user ticket
-export const getTicket = createAsyncThunk(
-  'tickets/get',
+// close ticket
+export const closeTicket = createAsyncThunk(
+  'tickets/close',
   async (ticketId, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token
-      return await ticketService.getTicket(ticketId, token)
+
+      return await ticketService.closeTicket(ticketId, token)
     } catch (error) {
       const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
+        (error.response && error.response.data && error.response.data.message) ||
         error.message ||
         error.toString()
 
@@ -144,8 +140,8 @@ export const ticketSlice = createSlice({
             : ticket
         )
       })
-  },
+  }
 })
 
-export const { reset } = ticketSlice.actions
+export const {reset} = ticketSlice.actions
 export default ticketSlice.reducer

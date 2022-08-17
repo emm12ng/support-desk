@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react'
-import { toast } from 'react-toastify'
-import { useNavigate } from 'react-router-dom'
-import { FaSignInAlt } from 'react-icons/fa'
-import { useSelector, useDispatch } from 'react-redux'
-import { login, reset } from '../features/auth/authSlice'
+import {useState, useEffect} from 'react'
+import {useSelector, useDispatch} from 'react-redux'
+import {useNavigate} from 'react-router-dom'
+import {toast} from 'react-toastify'
+import {login, reset} from '../features/auth/authSlice'
+import {FaSignInAlt} from 'react-icons/fa'
 import Spinner from '../components/Spinner'
 
 function Login() {
@@ -12,12 +12,12 @@ function Login() {
     password: '',
   })
 
-  const { email, password } = formData
+  const {email, password} = formData
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const { user, isLoading, isError, isSuccess, message } = useSelector(
+  const {user, isLoading, isError, isSuccess, message} = useSelector(
     (state) => state.auth
   )
 
@@ -26,7 +26,7 @@ function Login() {
       toast.error(message)
     }
 
-    // Redirect when logged in
+    // redirect when logged in
     if (isSuccess || user) {
       navigate('/')
     }
@@ -44,23 +44,20 @@ function Login() {
   const onSubmit = (e) => {
     e.preventDefault()
 
-    const userData = {
-      email,
-      password,
-    }
+    const userData = {email, password}
 
     dispatch(login(userData))
   }
 
   if (isLoading) {
-    return <Spinner />
+    return <Spinner/>
   }
 
   return (
     <>
       <section className='heading'>
         <h1>
-          <FaSignInAlt /> Login
+          <FaSignInAlt/> Login
         </h1>
         <p>Please log in to get support</p>
       </section>

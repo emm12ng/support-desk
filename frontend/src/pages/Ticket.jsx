@@ -1,18 +1,18 @@
-import { useEffect, useState } from 'react'
-import { toast } from 'react-toastify'
-import { useSelector, useDispatch } from 'react-redux'
-import { getTicket, closeTicket } from '../features/tickets/ticketSlice'
-import { useParams, useNavigate } from 'react-router-dom'
-import BackButton from '../components/BackButton'
+import {useEffect, useState} from 'react'
+import {useParams, useNavigate} from 'react-router-dom'
+import {useSelector, useDispatch} from 'react-redux'
+import {toast} from 'react-toastify'
+import Modal from 'react-modal'
+import {FaPlus} from 'react-icons/fa'
+import {getTicket, closeTicket} from '../features/tickets/ticketSlice'
 import Spinner from '../components/Spinner'
+import BackButton from '../components/BackButton'
 import {
     getNotes,
     createNote,
     reset as notesReset,
   } from '../features/notes/noteSlice'
 import NoteItem from '../components/NoteItem'
-import Modal from 'react-modal'
-import { FaPlus } from 'react-icons/fa'
 
 const customStyles = {
   content: {
@@ -23,29 +23,27 @@ const customStyles = {
     bottom: 'auto',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
-    position: 'relative',
-  },
+    position: 'relative'
+  }
 }
 
 Modal.setAppElement('#root')
 
 function Ticket() {
-
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const [noteText, setNoteText] = useState('')
 
-  const { ticket, isLoading, isSuccess, isError, message } = useSelector(
+  const {ticket, isLoading, isSuccess, isError, message} = useSelector(
     (state) => state.tickets
   )
-
-  const { notes, isLoading: notesIsLoading } = useSelector(
+  const {notes, isLoading: notesIsLoading} = useSelector(
     (state) => state.notes
   )
 
   const params = useParams()
+  const {ticketId} = useParams()
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const { ticketId } = useParams()
 
   useEffect(() => {
     if (isError) {
@@ -58,18 +56,18 @@ function Ticket() {
     // eslint-disable-next-line
   }, [isError, message, ticketId])
 
-  // Create note submit
+  // create note submit
   const onNoteSubmit = (e) => {
     e.preventDefault()
-    dispatch(createNote({ noteText, ticketId }))
+    dispatch(createNote({noteText, ticketId}))
     closeModal()
   }
 
-  // Open/close modal
+  // open and close modal
   const openModal = () => setModalIsOpen(true)
   const closeModal = () => setModalIsOpen(false)
 
-  // Close ticket
+  // close ticket
   const onTicketClose = () => {
     dispatch(closeTicket(ticketId))
     toast.success('Ticket Closed')
@@ -77,7 +75,7 @@ function Ticket() {
   }
 
   if (isLoading || notesIsLoading) {
-    return <Spinner />
+    return <Spinner/>
   }
 
   if (isError) {
@@ -87,7 +85,7 @@ function Ticket() {
   return (
     <div className='ticket-page'>
       <header className='ticket-header'>
-        <BackButton url='/tickets' />
+        <BackButton url='/tickets'/>
         <h2>
           Ticket ID: {ticket._id}
           <span className={`status status-${ticket.status}`}>
@@ -98,7 +96,7 @@ function Ticket() {
           Date Submitted: {new Date(ticket.createdAt).toLocaleString('en-US')}
         </h3>
         <h3>Product: {ticket.product}</h3>
-        <hr />
+        <hr/>
         <div className='ticket-desc'>
           <h3>Description of Issue</h3>
           <p>{ticket.description}</p>
@@ -108,7 +106,7 @@ function Ticket() {
 
       {ticket.status !== 'closed' && (
         <button onClick={openModal} className='btn'>
-          <FaPlus /> Add Note
+          <FaPlus/> Add Note
         </button>
       )}
 
@@ -134,9 +132,7 @@ function Ticket() {
             ></textarea>
           </div>
           <div className='form-group'>
-            <button className='btn' type='submit'>
-              Submit
-            </button>
+            <button className='btn' type='submit'>Submit</button>
           </div>
         </form>
       </Modal>
@@ -146,9 +142,7 @@ function Ticket() {
       ))}
 
       {ticket.status !== 'closed' && (
-        <button onClick={onTicketClose} className='btn btn-block btn-danger'>
-          Close Ticket
-        </button>
+        <button onClick={onTicketClose} className='btn btn-block btn-danger'>Close Ticket</button>
       )}
     </div>
   )
