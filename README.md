@@ -12,7 +12,6 @@ Create .env file using .envpublic as reference and add your own MongoDB URI and 
 ### Install Backend Dependencies
 `npm install`
 ### Install Frontend Dependencies
-`cd frontend`
-`npm install`
+`cd frontend\nnpm install`
 ### Run both frontend and backend in development
 `npm run dev`
