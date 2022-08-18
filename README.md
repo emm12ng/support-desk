@@ -1,7 +1,7 @@
 # Support Desk Web App
 
 ## Description
-This is an application made using the MERN stack for the purpose of communication between customers and tech staff about tech products. Customers are able to register and log into personal accounts, create tickets for product assistance, and chat with staff. This project was made as part of a Udemy course.
+This is an application made using the MERN stack for the purpose of communication between customers and tech staff about tech products. Customers are able to register and log into personal accounts, create tickets for product assistance, and chat with staff. I have yet to implement the staff feature to the app; this is something I hope to do in the future. This project was made as part of a Udemy course.
 
 ## App Diagram
 ![Support Desk diagram](https://user-images.githubusercontent.com/89936824/175428250-01798ee0-5264-4d83-acaa-a2d9349fe702.jpeg)
